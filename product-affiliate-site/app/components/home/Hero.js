@@ -1,6 +1,7 @@
 import React from 'react';
 import { Search, Filter, Sparkles } from 'lucide-react';
 import FeatureCard from './FeatureCard';
+import Link from 'next/link';
 
 const Hero = () => {
   const features = [
@@ -23,7 +24,12 @@ const Hero = () => {
 
   return (
     <div className="relative overflow-hidden">
-      <div className="animated-gradient py-16 sm:py-24">
+      <ol className='flex flex-row gap-8 bg-slate-100 px-4 w-full justify-center font-light'>
+        <li className='py-4 px-2 hover:bg-slate-200'><Link href='/'>Tech Product</Link></li>
+        <li className='py-4 px-2 hover:bg-slate-200'><Link href='/'>Home Decor</Link></li>
+        <li className='py-4 px-2 hover:bg-slate-200'><Link href='/'>Utilities</Link></li>
+      </ol>
+      <div className="animated-gradient py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">

@@ -3,7 +3,7 @@ import { Mail, Phone, MapPin } from 'lucide-react';
 
 const ContactPage = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-500 via-purple-500 to-blue-500 p-6">
+    <div className="min-h-screen animated-gradient p-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12 pt-8">
           <h1 className="text-4xl font-bold text-white mb-4">Get In Touch</h1>

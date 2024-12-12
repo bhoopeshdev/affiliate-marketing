@@ -24,7 +24,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-pink-500 via-purple-500 to-blue-500">
+      <section className="relative animated-gradient">
         <div className="max-w-6xl mx-auto px-4 py-20">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -72,9 +72,6 @@ export default function LandingPage() {
                 <p className="text-gray-600">
                   Experience the best in modern living with our carefully selected products.
                 </p>
-                <a href="#" className="inline-flex items-center mt-4 text-purple-600 hover:text-purple-700">
-                  Learn More <ArrowRight className="ml-2 w-4 h-4" />
-                </a>
               </div>
             ))}
           </div>
