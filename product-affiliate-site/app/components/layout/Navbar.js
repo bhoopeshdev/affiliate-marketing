@@ -4,11 +4,15 @@ import Link from 'next/link';
 import { Heart } from 'lucide-react';
 import WishlistPopup from './WishListPopup';
 import { useWishlist } from '../../context/WishlistContext';
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [activePath, setActivePath] = useState('/');
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const { wishlist } = useWishlist();
+  const [searchText, setSearchText] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const router = useRouter();
   
   const navItems = [
     { name: 'Home', path: '/' },
@@ -16,16 +20,73 @@ const Navbar = () => {
     { name: 'Contact', path: '/contact' }
   ];
 
+  const mockSuggestions = ["Tech Gadgets", "Home Decor", "Smartphones", "Furniture", "Appliances"];
+
+  const handleSearch = (event) => {
+    if (event.key === "Enter") {
+      router.push(`/list?search=${searchText}`);
+      setSearchText(""); // Clear the input
+      setSuggestions([]); // Clear suggestions
+    }
+  };
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setSearchText(value);
+
+    if (value) {
+      // Filter suggestions based on input
+      setSuggestions(
+        mockSuggestions.filter((item) =>
+          item.toLowerCase().includes(value.toLowerCase())
+        )
+      );
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setSearchText(suggestion);
+    setSuggestions([]);
+    router.push(`/list?search=${suggestion}`);
+  };
+
   return (
     <nav className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className="flex justify-between h-16 gap-8">
           <div className="flex items-center">
             <Link href="/" onClick={() => setActivePath('/')}>
               <span className="text-xl font-bold text-indigo-600">
                 BDCoolHub
               </span>
             </Link>
+          </div>
+
+          {/* Search Bar Section */}
+          <div className="relative w-full max-w-md flex flex-col justify-center">
+            <input
+              type="text"
+              value={searchText}
+              onChange={handleInputChange}
+              onKeyDown={handleSearch}
+              className="w-full px-4 py-2 h-12 mx-4 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
+              placeholder="Search for products..."
+            />
+            {suggestions.length > 0 && (
+              <ul className="absolute top-full z-10 bg-white border border-gray-300 w-full rounded-md shadow-lg">
+                {suggestions.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleSuggestionClick(suggestion)}
+                    className="px-4 py-2 cursor-pointer hover:bg-indigo-50"
+                  >
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           
           <div className="flex items-center space-x-8">

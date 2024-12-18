@@ -3,6 +3,7 @@ import { Search, Filter, Sparkles } from 'lucide-react';
 import FeatureCard from './FeatureCard';
 import Link from 'next/link';
 
+
 const Hero = () => {
   const features = [
     {
@@ -25,9 +26,9 @@ const Hero = () => {
   return (
     <div className="relative overflow-hidden">
       <ol className='flex flex-row gap-8 bg-slate-100 px-4 w-full justify-center font-light'>
-        <li className='py-4 px-2 hover:bg-slate-200'><Link href='/'>Tech Product</Link></li>
-        <li className='py-4 px-2 hover:bg-slate-200'><Link href='/'>Home Decor</Link></li>
-        <li className='py-4 px-2 hover:bg-slate-200'><Link href='/'>Utilities</Link></li>
+        <li className='py-4 px-2'><Link href={{ pathname: '/list', query: { category: "tech" } }} className='p-2 hover:bg-slate-200 rounded-l'>Tech Product</Link></li>
+        <li className='py-4 px-2'><Link href={{ pathname: '/list', query: { category: "home-decor" } }} className='p-2 hover:bg-slate-200 rounded-l'>Home Decor</Link></li>
+        <li className='py-4 px-2'><Link href={{ pathname: '/list', query: { category: "utility" } }} className='p-2 hover:bg-slate-200 rounded-l'>Utilities</Link></li>
       </ol>
       <div className="animated-gradient py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

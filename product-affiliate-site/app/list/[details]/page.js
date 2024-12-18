@@ -1,7 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
 import React from 'react';
-import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from './button'
 import { useWishlist } from '../../context/WishlistContext'
@@ -117,16 +116,23 @@ export default function ProductDetails({ params}) {
             </Button>
           </div>
           <p className="text-gray-600 mb-4">{product.shortDescription}</p>
-          <Button 
-            className="mb-4 flex items-center"
-            onClick={handleAddToWishlist}
-            disabled={isInWishlist}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
-            </svg>
-            {isInWishlist ? 'Added to Wishlist' : 'Add to Wishlist'}
-          </Button>
+          <div className="flex flex-row gap-4">
+            <Button 
+              className="mb-4 flex items-center"
+              onClick={handleAddToWishlist}
+              disabled={isInWishlist}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+              </svg>
+              {isInWishlist ? 'Added to Wishlist' : 'Add to Wishlist'}
+            </Button>
+            <Button className="mb-4">
+              <Link href={product.affiliateLink}>
+                View on Partner Site
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
 

@@ -1,14 +1,21 @@
 "use client"
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Sliders, SortDesc, Star } from 'lucide-react';
 import ProductCard from '../components/products/ProductCard';
 import { products } from '../data/product'
+import { useSearchParams } from 'next/navigation'
 
 const ProductListingPage = () => {
-  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  const searchParams = useSearchParams()
+  const category = searchParams.get('category')
+  const searchQuery = searchParams.get('search')
+
+  const [selectedCategory, setSelectedCategory] = useState(category != null ? category : 'all');
   const [selectedPriceRange, setSelectedPriceRange] = useState('all');
   const [sortBy, setSortBy] = useState('relevance');
   const [showTrending, setShowTrending] = useState(false);
+  const [searchedText, setSearchText] = useState(searchQuery != null ? searchQuery : '');
 
   const priceRanges = [
     { label: 'All Prices', value: 'all' },
@@ -30,6 +37,17 @@ const ProductListingPage = () => {
     { label: 'Price: High to Low', value: 'price-desc' },
     { label: 'Rating', value: 'rating' }
   ];
+
+  // Update searchParams in the URL
+  const updateSearchParams = (param, value) => {
+    const newParams = new URLSearchParams(searchParams.toString());
+    if (value === "all" || value === "") {
+      newParams.delete(param); // Remove unnecessary params
+    } else {
+      newParams.set(param, value); // Update the param value
+    }
+    router.push(`/list?${newParams.toString()}`);
+  };
 
   const filteredProducts = useMemo(() => {
     return products
@@ -60,7 +78,7 @@ const ProductListingPage = () => {
             return 0;
         }
       });
-  }, [products, selectedCategory, selectedPriceRange, sortBy, showTrending]);
+  }, [products, selectedCategory, selectedPriceRange, sortBy, showTrending, searchParams]);
 
   return (
     <div className="min-h-screen">
@@ -76,7 +94,7 @@ const ProductListingPage = () => {
             {/* Category Filter */}
             <select 
               value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              onChange={(e) => {setSelectedCategory(e.target.value) }}
               className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
               {categories.map(category => (
@@ -132,7 +150,7 @@ const ProductListingPage = () => {
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredProducts.map(product => (
-            <ProductCard key={product.id} {...product}/>
+            <ProductCard key={product.id} product={product}/>
           ))}
         </div>
 
